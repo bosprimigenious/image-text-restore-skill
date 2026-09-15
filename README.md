@@ -57,6 +57,14 @@ python3 scripts/enhance_raster.py input.png output.png --scale 2 --mode illustra
 
 Available modes are `illustration`, `photo`, and `text`. Use `--dry-run` to inspect the output plan. Existing outputs, giant canvases, shrinking, and major aspect-ratio changes are rejected by default.
 
+For a directory of images:
+
+```bash
+python3 scripts/enhance_batch.py inputs/ outputs/ --scale 2 --mode illustration
+```
+
+The batch command writes `outputs/manifest.json`. Each item includes source and output dimensions and SHA-256 hashes. The command fails if the input directory is empty, a candidate cannot be written and decoded, output names collide, or the verified output count differs from the expected count.
+
 ## Limits
 
 - Enlarging dimensions alone cannot restore information absent from the source.

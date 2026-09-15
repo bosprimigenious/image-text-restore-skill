@@ -72,6 +72,7 @@ When Pillow is available, use `scripts/enhance_raster.py` before a generative ed
 ```bash
 python3 scripts/enhance_raster.py input.png output.png --scale 2 --mode illustration
 python3 scripts/enhance_raster.py input.png output.png --target 3840x2160 --mode text --dry-run
+python3 scripts/enhance_batch.py inputs/ outputs/ --scale 2 --mode illustration
 ```
 
 Modes are decision hints rather than guarantees:
@@ -81,6 +82,8 @@ Modes are decision hints rather than guarantees:
 - `photo`: conservative photographic sharpening.
 
 This baseline cannot reconstruct detail that is absent from the source. If it does not meet the target, preserve it as a comparison candidate and proceed to local model-based repair or an external super-resolution tool.
+
+For more than one input, use `scripts/enhance_batch.py`. It accepts PNG, JPEG, and WebP files, invokes the single-image command for each item, and writes `manifest.json` with expected, successful, and failed counts plus input/output hashes. Treat a nonzero exit or any failed manifest item as an incomplete batch.
 
 ## Iterative Calibration Loop
 
