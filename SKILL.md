@@ -1,22 +1,35 @@
 ---
 name: image-text-restore
-description: Restore and upscale AI-generated or text-heavy raster images while preserving structure and text accuracy. Use when Codex needs to make an image clearer, enlarge it safely, repair local detail, fix garbled or blurry text, or prepare high-resolution posters, diagrams, screenshots, infographics, menus, labels, covers, and UI images. Prefer imagegen for creative restyling without fidelity constraints.
+description: Generate clear AI images and restore or upscale existing raster images while preserving structure and text accuracy. Use for GPT Image 2 or 2.5 generation-quality planning, high-resolution image generation, post-generation sharpening, safe enlargement, local detail repair, garbled or blurry text, and delivery of posters, diagrams, screenshots, infographics, menus, labels, covers, and UI images. Prefer imagegen for creative restyling without fidelity constraints.
 license: MIT
 metadata:
-  when-to-use: "AI图片变清晰, 图片高清放大, 修图中文, 文字糊, 错字, 海报修字, 架构图重绘, 矢量文字, 截图清晰, 菜单文字, 放大图片保字"
+  when-to-use: "GPT Image 2, GPT Image 2.5, AI生图清晰, 高清生图, AI图片变清晰, 图片高清放大, 锐化, 修图中文, 文字糊, 错字, 海报修字, 架构图重绘, 矢量文字, 截图清晰, 菜单文字, 放大图片保字"
 ---
 
 # Image Text Restore
 
-Use this skill for image enhancement tasks where text fidelity matters more than painterly freedom. Treat Chinese text as content, not decoration. Separate four different goals before choosing a method: more pixels, sharper appearance, correct text, and enough layout space. They require different repairs.
+Use this skill during image generation and after an image already exists. Treat Chinese text as content, not decoration. Separate five different goals before choosing a method: a clean initial render, more pixels, sharper appearance, correct text, and enough layout space. They require different controls and repairs.
 
 For ordinary AI-generated illustrations without important text, use the same evidence-first approach but skip OCR and typography reconstruction. Preserve the original composition unless the user asks for a redesign.
+
+## Two-Stage Clarity Model
+
+Classify the request before acting:
+
+1. **Generation-time clarity**: set an explicit model, native output size, quality level, aspect ratio, output format, and composition constraints before generating. Produce inexpensive candidates first when practical, then render the selected composition at the highest useful native quality. This is the preferred route for GPT Image 2, GPT Image 2.5, and other generators that expose size and quality controls.
+2. **Post-generation clarity**: inspect the existing image, preserve an immutable original, then choose deterministic enlargement and sharpening, neural super-resolution, masked generative repair, typography reconstruction, or vector rebuilding.
+
+Do not describe these stages as interchangeable. A larger canvas does not repair malformed anatomy or wrong text, sharpening does not add reliable missing information, and a generative upscaler may change content while making it look more detailed.
+
+Read [references/generation-stage.md](references/generation-stage.md) before generating a new image whose clarity, final dimensions, text, or print/display use matters.
 
 ## Core Rule
 
 Do not rely on an image model as the final source of Chinese text. Use image generation/editing for background, layout, texture, lighting, edges, and local detail. Use OCR, human-readable transcription, or user-provided text as the source of truth, then re-render important text with real fonts or ask for explicit confirmation before finalizing.
 
 ## Default Workflow
+
+If the image does not exist yet, run the generation-stage workflow first. Once a candidate exists, continue with the inventory and post-generation steps below only when the native render still misses the delivery target.
 
 1. Inventory the source image.
    - Record file path, dimensions, format, and visible content.
@@ -116,6 +129,8 @@ For local inpainting, add:
 Only repaint the masked/selected area. Blend it with the surrounding style. Keep all unmasked areas pixel/layout consistent. If the selected area contains text, remove/blank it cleanly rather than redrawing text.
 ```
 
+For a new GPT Image 2 or 2.5 generation, use the generation contract and parameter checklist in `references/generation-stage.md`. Specify real API/tool controls such as size and quality when available; prompt adjectives such as “4K,” “8K,” or “ultra detailed” are not evidence that the requested pixel dimensions or rendering quality were used.
+
 ## Text Correction Table
 
 Use a compact table before final rendering:
@@ -135,6 +150,7 @@ Before final response, check:
 - Text is sharp at 100% zoom and readable at target display size.
 - Local repainting improved detail without changing diagrams, arrows, labels, icons, or factual relationships.
 - Output dimensions and file paths are reported.
+- For new generations, the selected model, requested native dimensions, quality setting, and output format are reported when the tool exposes them.
 - Pixel dimensions increased only when that serves the delivery target; dimension alone is not claimed as evidence of recovered detail.
 - Text boxes have enough room at the intended viewing size; no label depends on zooming far beyond normal use just to become legible.
 - The chosen route and its limitation are stated: deterministic enhancement preserves content but cannot recover missing strokes; model-based enhancement can invent detail; vector reconstruction can change layout if coordinates are not calibrated.
@@ -150,3 +166,5 @@ Read [references/diagram-restoration.md](references/diagram-restoration.md) befo
 Read `references/prompts.md` when you need ready-made prompt variants for enhancement, background-only repainting, typography poster repair, or diagram restoration.
 
 Read [references/image-enhancement.md](references/image-enhancement.md) for ordinary AI-generated illustrations, photographs, and choosing between deterministic scaling, local generative repair, and neural super-resolution.
+
+Read [references/generation-stage.md](references/generation-stage.md) for GPT Image 2/2.5 and other model-generation workflows that need native clarity before post-processing.

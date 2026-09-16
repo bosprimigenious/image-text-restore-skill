@@ -1,5 +1,18 @@
 # Prompt Variants
 
+## New high-clarity generation
+
+```text
+Create a clean native-resolution image for the requested delivery size and aspect ratio.
+Use coherent fine detail, well-defined silhouettes, clean material boundaries, natural
+local contrast, and controlled texture. Preserve the requested subject count, identity,
+pose, camera/viewpoint, geometry, and palette. Avoid haze, muddy edges, oversharpening
+halos, duplicated anatomy, pseudo-text, watermarks, and unrequested symbols. Keep the
+specified text area clean and visually quiet for later typesetting.
+```
+
+Set model, size, quality, format, and compression through the image tool or API. Prompt words such as `4K` or `8K` do not replace those controls.
+
 ## Background-only detail enhancement
 
 ```text

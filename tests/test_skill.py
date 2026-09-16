@@ -20,6 +20,7 @@ class SkillPackageTests(unittest.TestCase):
 
         for relative in (
             "references/prompts.md",
+            "references/generation-stage.md",
             "references/image-enhancement.md",
             "references/diagram-restoration.md",
             "scripts/enhance_raster.py",

@@ -1,9 +1,10 @@
 # Image Text Restore
 
-A Codex skill for making AI-generated and text-heavy images clearer without silently changing their content.
+A Codex skill for generating clear AI images and making existing AI-generated or text-heavy images clearer without silently changing their content. It covers both native generation with GPT Image 2/2.5 and post-generation enlargement, sharpening, repair, and text reconstruction.
 
-It separates four problems that are often confused:
+It separates five problems that are often confused:
 
+- producing a clean native render;
 - adding pixels;
 - sharpening visible edges;
 - correcting unreadable or malformed text;
@@ -30,6 +31,14 @@ git clone https://github.com/bosprimigenious/image-text-restore-skill.git \
 Restart Codex after installing a new skill.
 
 ## Use
+
+For generation-time clarity with GPT Image 2, GPT Image 2.5, or another image model:
+
+```text
+Use $image-text-restore while generating this image. Set an explicit native size and
+quality, preserve the requested composition, leave a clean area for real typography,
+and verify the decoded pixel dimensions before any post-processing.
+```
 
 Attach or identify an image, then ask:
 
@@ -72,7 +81,7 @@ The batch command writes `outputs/manifest.json`. Each item includes source and 
 - OCR is a draft transcription and must be checked for important text.
 - Dense diagrams may require editable text and geometry rather than image-only enhancement.
 
-See [SKILL.md](SKILL.md) for the workflow, [image-enhancement.md](references/image-enhancement.md) for generated artwork and photographs, and [diagram-restoration.md](references/diagram-restoration.md) for text-heavy layouts.
+See [SKILL.md](SKILL.md) for the workflow, [generation-stage.md](references/generation-stage.md) for GPT Image 2/2.5 and other native generation, [image-enhancement.md](references/image-enhancement.md) for post-generation artwork and photographs, and [diagram-restoration.md](references/diagram-restoration.md) for text-heavy layouts.
 
 ## License
 
